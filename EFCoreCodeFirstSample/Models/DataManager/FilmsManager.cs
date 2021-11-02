@@ -6,8 +6,8 @@ namespace EFCoreCodeFirstSample.Models.DataManager
 {
     public class FilmsManager : IDataRepository<Films>
     {
-        readonly FilmsContext _filmsContext;
-        public FilmsManager(FilmsContext context)
+        readonly MyAppContext _filmsContext;
+        public FilmsManager(MyAppContext context)
         {
             _filmsContext = context;
         }
