@@ -1,9 +1,9 @@
-﻿using EFCoreCodeFirstSample.Models;
-using EFCoreCodeFirstSample.Models.Repository;
+﻿using EFCoreCodeFirstSampleWEBAPI.Models;
+using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace EFCoreCodeFirstSample.Controllers
+namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
     [Route("api/films")]
     [ApiController]

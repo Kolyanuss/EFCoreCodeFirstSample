@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EFCoreCodeFirstSample.Models
+namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class ListFilms
+    public class FilmsUsers
     {
         public int IdFilms { get; set; }
         public Films Films { get; set; }

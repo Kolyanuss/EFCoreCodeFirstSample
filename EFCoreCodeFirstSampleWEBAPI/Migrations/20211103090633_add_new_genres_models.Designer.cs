@@ -4,14 +4,16 @@ using EFCoreCodeFirstSampleWEBAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Migrations
 {
     [DbContext(typeof(MyAppContext))]
-    partial class MyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20211103090633_add_new_genres_models")]
+    partial class add_new_genres_models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,20 +38,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Description");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "Husmant",
-                            DescriptionText = "Best film"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Author = "Husmant2",
-                            DescriptionText = "Almost best film"
-                        });
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstSampleWEBAPI.Models.Films", b =>
@@ -77,24 +65,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Migrations
                     b.HasIndex("FKDescriptionId");
 
                     b.ToTable("Films");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Country = "USA",
-                            FKDescriptionId = 1,
-                            NameFilm = "Hellowin",
-                            ReleaseData = new DateTime(1979, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Country = "Ukraine",
-                            FKDescriptionId = 2,
-                            NameFilm = "Strangers",
-                            ReleaseData = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("EFCoreCodeFirstSampleWEBAPI.Models.FilmsGenres", b =>

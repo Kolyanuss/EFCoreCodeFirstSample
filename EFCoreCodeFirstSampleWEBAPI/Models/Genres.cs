@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class Description
+    public class Genres
     {
         public int Id { get; set; }
         [Required]
-        public string DescriptionText { get; set; }
-        public string Author { get; set; }
+        public string GenreName { get; set; }
+        public List<FilmsGenres> FilmsGenres { get; set; }
     }
 }

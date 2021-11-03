@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EFCoreCodeFirstSample.Models
+namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
     public class User
     {
@@ -11,6 +11,6 @@ namespace EFCoreCodeFirstSample.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
-        public List<ListFilms> ListFilms { get; set; }
+        public List<FilmsUsers> FilmsUsers { get; set; }
     }
 }

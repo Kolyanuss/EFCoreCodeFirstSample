@@ -1,8 +1,8 @@
-﻿using EFCoreCodeFirstSample.Models.Repository;
+﻿using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EFCoreCodeFirstSample.Models.DataManager
+namespace EFCoreCodeFirstSampleWEBAPI.Models.DataManager
 {
     public class FilmsManager : IDataRepository<Films>
     {
@@ -30,7 +30,7 @@ namespace EFCoreCodeFirstSample.Models.DataManager
             unit.NameFilm = entity.NameFilm;
             unit.ReleaseData = entity.ReleaseData;
             unit.Country = entity.Country;
-            unit.DescriptionId = entity.DescriptionId;
+            unit.FKDescriptionId = entity.FKDescriptionId;
             _filmsContext.SaveChanges();
         }
         public void Delete(Films unit)
