@@ -1,20 +1,30 @@
-﻿using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
+﻿using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
+using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models.DataManager
 {
-    public class FilmsManager : IDataRepository<Films>
+    public class FilmsManager : IFilmsManager<Films>
     {
         readonly MyAppContext _filmsContext;
-        public FilmsManager(MyAppContext context)
+        public FilmsManager(MyAppContext filmsContext)
         {
-            _filmsContext = context;
+            _filmsContext = filmsContext;
         }
+
+        /*private RepositoryWrapper _repositoryWrapper;
+        public FilmsManager(RepositoryWrapper repositoryWrapper)
+        {
+            _repositoryWrapper = repositoryWrapper;
+        }*/
+
         public IEnumerable<Films> GetAll()
         {
+            //return _repositoryWrapper.Films.GetAll();
             return _filmsContext.Films.ToList();
         }
+
         public Films Get(long id)
         {
             return _filmsContext.Films

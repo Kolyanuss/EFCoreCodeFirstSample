@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class Films
+    public class Films : IBaseEntity
     {
+        public int _Id { get { return Id; } }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -19,5 +20,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models
         public Description Description { get; set; }
         public List<FilmsUsers> FilmsUsers { get; set; }
         public List<FilmsGenres> FilmsGenres { get; set; }
+
+        public Films()
+        {
+            FilmsUsers = new List<FilmsUsers>();
+            FilmsGenres = new List<FilmsGenres>();
+        }
     }
 }

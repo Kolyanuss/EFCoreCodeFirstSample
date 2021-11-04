@@ -1,4 +1,5 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.Models;
+using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,10 +10,15 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
     [ApiController]
     public class FilmsController : ControllerBase
     {
-        private readonly IDataRepository<Films> _dataRepository;
-        public FilmsController(IDataRepository<Films> dataRepository)
+        /*private readonly IFilmsManager<Films> _manager;
+        public FilmsController(IFilmsManager<Films> manager)
         {
-            _dataRepository = dataRepository;
+            _manager = manager;
+        }*/
+        private IRepositoryWrapper _wraper;
+        public FilmsController(IRepositoryWrapper wraper)
+        {
+            _wraper = wraper;
         }
 
         // GET: api/Films
@@ -21,7 +27,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                IEnumerable<Films> Filmes = _dataRepository.GetAll();
+                IEnumerable<Films> Filmes = _wraper.Films.GetAll();
                 return Ok(Filmes);
             }
             catch (System.Exception)
@@ -32,60 +38,89 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         }
 
         // GET: api/Films/5
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(long id)
+        [HttpGet("{id}", Name = "GetFilm")]
+        public IActionResult GetById(long id)
         {
-            Films films = _dataRepository.Get(id);
-            if (films == null)
+            try
             {
-                return NotFound("The Films record couldn't be found.");
+                Films films = _wraper.Films.Get(id);
+                if (films == null)
+                {
+                    return NotFound("The Films record couldn't be found.");
+                }
+                return Ok(films);
             }
-            return Ok(films);
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // POST: api/Films
         [HttpPost]
         public IActionResult Post([FromBody] Films films)
         {
-            if (films == null)
+            try
             {
-                return BadRequest("Films is null.");
+                if (films == null)
+                {
+                    return BadRequest("Films is null.");
+                }
+                _wraper.Films.Add(films);
+                return CreatedAtRoute(
+                      "Get",
+                      new { Id = films.Id },
+                      films);
             }
-            _dataRepository.Add(films);
-            return CreatedAtRoute(
-                  "Get",
-                  new { Id = films.Id },
-                  films);
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // PUT: api/Films/5
         [HttpPut("{id}")]
         public IActionResult Put(long id, [FromBody] Films films)
         {
-            if (films == null)
+            try
             {
-                return BadRequest("Films is null.");
+                if (films == null)
+                {
+                    return BadRequest("Films is null.");
+                }
+                Films ToUpdate = _wraper.Films.Get(id);
+                if (ToUpdate == null)
+                {
+                    return NotFound("The Films record couldn't be found.");
+                }
+                _wraper.Films.Update(ToUpdate, films);
+                return NoContent();
             }
-            Films ToUpdate = _dataRepository.Get(id);
-            if (ToUpdate == null)
+            catch (System.Exception)
             {
-                return NotFound("The Films record couldn't be found.");
+                return StatusCode(500, "Internal server error");
             }
-            _dataRepository.Update(ToUpdate, films);
-            return NoContent();
         }
 
         // DELETE: api/Films/5
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            Films films = _dataRepository.Get(id);
-            if (films == null)
+            try
             {
-                return NotFound("The Films record couldn't be found.");
+                Films films = _wraper.Films.Get(id);
+                if (films == null)
+                {
+                    return NotFound("The Films record couldn't be found.");
+                }
+                _wraper.Films.Delete(films);
+                return NoContent();
             }
-            _dataRepository.Delete(films);
-            return NoContent();
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
+
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
+namespace EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface
 {
-    public interface IDataRepository<TEntity>
+    public interface IFilmsManager<TEntity>
     {
         IEnumerable<TEntity> GetAll();
         TEntity Get(long id);

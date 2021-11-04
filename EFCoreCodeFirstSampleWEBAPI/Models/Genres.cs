@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class Genres
+    public class Genres : IBaseEntity
     {
+        public int _Id { get { return Id; } }
         public int Id { get; set; }
         [Required]
         public string GenreName { get; set; }

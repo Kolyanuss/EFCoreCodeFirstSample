@@ -75,6 +75,34 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models
                 Country = "Ukraine",
                 FKDescriptionId = 2,
             });
+
+            modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = 1,
+                UserName = "Nikolay",
+                IsAdmin = true,
+                Password = "1234",
+            },
+            new User
+            {
+                Id = 2,
+                UserName = "Vasya",
+                IsAdmin = false,
+                Password = "111",
+            });
+
+            modelBuilder.Entity<FilmsUsers>().HasData(
+            new FilmsUsers
+            {
+                IdFilms = 1,
+                IdUser = 2
+            },
+            new FilmsUsers
+            {
+                IdFilms = 2,
+                IdUser = 2
+            });
         }
     }
 }

@@ -1,6 +1,7 @@
 using EFCoreCodeFirstSampleWEBAPI.Models;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataManager;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
+using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,8 @@ namespace EFCoreCodeFirstSampleWEBAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyAppContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FirstConect"]));
-            services.AddScoped<IDataRepository<Films>, FilmsManager>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            //services.AddScoped<IFilmsManager<Films>, FilmsManager>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

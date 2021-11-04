@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class User
+    public class User : IBaseEntity
     {
+        public int _Id { get { return Id; } }
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public List<FilmsUsers> FilmsUsers { get; set; }
+
+        public User()
+        {
+            FilmsUsers = new List<FilmsUsers>();
+        }
     }
 }
