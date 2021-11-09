@@ -49,7 +49,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                Films films = _wraper.Films.Get(id);
+                Films films = _wraper.Films.GetById(id);
                 if (films == null)
                 {
                     return NotFound("The Films record couldn't be found.");
@@ -98,7 +98,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 {
                     return BadRequest("Films is null.");
                 }
-                Films ToUpdate = _wraper.Films.Get(id);
+                Films ToUpdate = _wraper.Films.GetById(id);
                 if (ToUpdate == null)
                 {
                     return NotFound("The Films record couldn't be found.");
@@ -118,7 +118,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                Films films = _wraper.Films.Get(id);
+                Films films = _wraper.Films.GetById(id);
                 if (films == null)
                 {
                     return NotFound("The Films record couldn't be found.");

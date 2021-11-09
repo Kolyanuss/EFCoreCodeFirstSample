@@ -7,5 +7,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface
 {
     public interface IFilmsRepository : IRepositoryBase<Films>
     {
+        Films GetById(long id);
     }
 }

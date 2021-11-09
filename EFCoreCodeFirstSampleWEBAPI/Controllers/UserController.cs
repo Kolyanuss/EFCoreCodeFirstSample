@@ -35,14 +35,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public IActionResult GetById(long id)
         {
-            try
-            {
-                User user = _wrapper.User.Get(id);
+                User user = _wrapper.User.GetById(id);
                 if (user == null)
                 {
                     return NotFound("The User record couldn't be found.");
                 }
                 return Ok(user);
+            try
+            {
             }
             catch (System.Exception)
             {
@@ -73,7 +73,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             {
                 return BadRequest("User is null.");
             }
-            User ToUpdate = _wrapper.User.Get(id);
+            User ToUpdate = _wrapper.User.GetById(id);
             if (ToUpdate == null)
             {
                 return NotFound("The User record couldn't be found.");
@@ -86,7 +86,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            User user = _wrapper.User.Get(id);
+            User user = _wrapper.User.GetById(id);
             if (user == null)
             {
                 return NotFound("The User record couldn't be found.");
