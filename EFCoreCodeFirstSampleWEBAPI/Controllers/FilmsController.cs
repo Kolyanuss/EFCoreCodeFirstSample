@@ -1,5 +1,7 @@
-﻿using EFCoreCodeFirstSampleWEBAPI.Models;
+﻿using AutoMapper;
+using EFCoreCodeFirstSampleWEBAPI.Models;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
+using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,9 +18,12 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             _manager = manager;
         }*/
         private IRepositoryWrapper _wraper;
-        public FilmsController(IRepositoryWrapper wraper)
+        private IMapper _mapper;
+
+        public FilmsController(IRepositoryWrapper wraper, IMapper mapper)
         {
             _wraper = wraper;
+            _mapper = mapper;
         }
 
         // GET: api/Films
@@ -28,7 +33,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             try
             {
                 IEnumerable<Films> Filmes = _wraper.Films.GetAll();
-                return Ok(Filmes);
+                var Result = _mapper.Map<IEnumerable<FilmsDTO>>(Filmes);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -48,7 +54,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 {
                     return NotFound("The Films record couldn't be found.");
                 }
-                return Ok(films);
+                else
+                {
+                    var Result = _mapper.Map<FilmsDTO>(films);
+                    return Ok(Result);
+                }
             }
             catch (System.Exception)
             {
