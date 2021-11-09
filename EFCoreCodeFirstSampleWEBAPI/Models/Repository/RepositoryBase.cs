@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : IBaseEntity
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected MyAppContext MyAppContext { get; set; }
         public RepositoryBase(MyAppContext myAppContext)
@@ -19,10 +20,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             return MyAppContext.Set<T>().ToList();
         }
 
-        public T Get(long id)
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
-            //return MyAppContext.Set<T>().AsNoTracking().FirstOrDefault();
-            return MyAppContext.Set<T>().FirstOrDefault(e => e._Id == id);
+            return MyAppContext.Set<T>().Where(expression);
         }
 
         public void Add(T entity)

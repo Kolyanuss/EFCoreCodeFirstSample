@@ -24,6 +24,7 @@ namespace EFCoreCodeFirstSampleWEBAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<MyAppContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FirstConect"]));
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             //services.AddScoped<IFilmsManager<Films>, FilmsManager>();

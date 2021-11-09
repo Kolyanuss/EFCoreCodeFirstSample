@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class Description : IBaseEntity
+    public class Description
     {
-        public int _Id { get { return Id; } }
         public int Id { get; set; }
         [Required]
         public string DescriptionText { get; set; }

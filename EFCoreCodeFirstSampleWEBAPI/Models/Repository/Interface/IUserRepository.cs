@@ -7,5 +7,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
+        User GetById(long id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface;
+using System.Linq;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
 {
@@ -6,6 +7,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
     {
         public UserRepository(MyAppContext myAppContext) : base(myAppContext)
         {
+        }
+
+        public User GetById(long id)
+        {
+            return GetByCondition(e => e.Id == id).FirstOrDefault();
         }
     }
 }

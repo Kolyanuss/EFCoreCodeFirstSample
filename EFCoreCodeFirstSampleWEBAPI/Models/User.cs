@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models
 {
-    public class User : IBaseEntity
+    public class User
     {
-        public int _Id { get { return Id; } }
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
