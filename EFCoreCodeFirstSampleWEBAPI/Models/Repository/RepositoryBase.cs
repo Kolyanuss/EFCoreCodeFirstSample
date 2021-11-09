@@ -31,7 +31,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             MyAppContext.SaveChanges();
         }
 
-        public void Update(T dbEntity, T entity)
+        public void Update(T entity)
         {
             MyAppContext.Set<T>().Update(entity);
             MyAppContext.SaveChanges();

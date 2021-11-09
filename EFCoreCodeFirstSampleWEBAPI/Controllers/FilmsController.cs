@@ -44,7 +44,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         }
 
         // GET: api/Films/5
-        [HttpGet("{id}", Name = "GetFilm")]
+        [HttpGet("{id}", Name = "FilmById")]
         public IActionResult GetById(long id)
         {
             try
@@ -68,19 +68,25 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Films
         [HttpPost]
-        public IActionResult Post([FromBody] Films films)
+        public IActionResult Post([FromBody] FilmsForCreationDto filmsDto)
         {
             try
             {
-                if (films == null)
+                if (filmsDto == null)
                 {
                     return BadRequest("Films is null.");
                 }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                var films = _mapper.Map<Films>(filmsDto);
                 _wraper.Films.Add(films);
+                var filmsDtoPrint = _mapper.Map<FilmsDTO>(films);
                 return CreatedAtRoute(
-                      "Get",
-                      new { Id = films.Id },
-                      films);
+                      "FilmById",
+                      new { Id = filmsDtoPrint.Id },
+                      filmsDtoPrint);
             }
             catch (System.Exception)
             {
@@ -90,20 +96,28 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Films/5
         [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody] Films films)
+        public IActionResult Put(long id, [FromBody] FilmsForCreationDto filmsDto)
         {
             try
             {
-                if (films == null)
+                if (filmsDto == null)
                 {
                     return BadRequest("Films is null.");
                 }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
                 Films ToUpdate = _wraper.Films.GetById(id);
                 if (ToUpdate == null)
                 {
                     return NotFound("The Films record couldn't be found.");
                 }
-                _wraper.Films.Update(ToUpdate, films);
+
+                _mapper.Map(filmsDto, ToUpdate);
+
+                _wraper.Films.Update(ToUpdate);
                 return NoContent();
             }
             catch (System.Exception)
