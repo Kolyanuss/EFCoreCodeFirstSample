@@ -32,7 +32,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}", Name = "UserById")]
         public IActionResult GetById(long id)
         {
                 User user = _wrapper.User.GetById(id);
@@ -78,7 +78,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             {
                 return NotFound("The User record couldn't be found.");
             }
-            _wrapper.User.Update(ToUpdate, user);
+            _wrapper.User.Update(ToUpdate);
             return NoContent();
         }
 

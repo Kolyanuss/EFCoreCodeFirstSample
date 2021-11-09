@@ -13,6 +13,7 @@ namespace EFCoreCodeFirstSampleWEBAPI
         public MappingProfile()
         {
             CreateMap<Films, FilmsDTO>();
+            CreateMap<FilmsForCreationDto, Films>();
         }
     }
 }

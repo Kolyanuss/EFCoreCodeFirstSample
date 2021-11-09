@@ -11,7 +11,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
         IEnumerable<T> GetAll();
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
         void Add(T entity);
-        void Update(T dbEntity, T entity);
+        void Update(T entity);
         void Delete(T entity);
     }
 }
