@@ -22,7 +22,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
         public T Get(long id)
         {
             //return MyAppContext.Set<T>().AsNoTracking().FirstOrDefault();
-            return MyAppContext.Set<T>().FirstOrDefault(e => e._Id == id);
+            return MyAppContext.Set<T>().FirstOrDefault(e => e._Id.Equals(id));
+            //return MyAppContext.Set<T>().Where(e => e._Id == id).FirstOrDefault();
         }
 
         public void Add(T entity)
