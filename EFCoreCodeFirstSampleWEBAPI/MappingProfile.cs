@@ -14,6 +14,8 @@ namespace EFCoreCodeFirstSampleWEBAPI
         {
             CreateMap<Films, FilmsDTO>();
             CreateMap<FilmsForCreationDto, Films>();
+            CreateMap<User, UserDTO>();
+            CreateMap<UserForCreationDto, User>();
         }
     }
 }
