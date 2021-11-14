@@ -15,9 +15,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             MyAppContext = myAppContext;
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return MyAppContext.Set<T>().ToList();
+            return MyAppContext.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)

@@ -10,6 +10,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
     {
         IUserRepository User { get; }
         IFilmsRepository Films { get; }
-        void Save();
+        void SaveAsync();
     }
 }

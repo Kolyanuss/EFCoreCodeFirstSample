@@ -1,5 +1,8 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
 {
@@ -9,9 +12,15 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
         {
         }
 
-        public User GetById(long id)
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return GetByCondition(e => e.Id == id).FirstOrDefault();
+            return await GetAll().ToListAsync();
         }
+
+        public async Task<User> GetByIdAsync(long id)
+        {
+            return await GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
+        }
+
     }
 }

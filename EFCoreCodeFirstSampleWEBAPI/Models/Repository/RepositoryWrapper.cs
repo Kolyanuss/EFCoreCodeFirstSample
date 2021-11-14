@@ -42,9 +42,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             }
         }
 
-        public void Save()
+        public async void SaveAsync()
         {
-            _myAppContext.SaveChanges();
+            await _myAppContext.SaveChangesAsync();
         }
     }
 }
