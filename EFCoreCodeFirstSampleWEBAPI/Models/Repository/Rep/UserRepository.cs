@@ -17,7 +17,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
             return await GetAll().ToListAsync();
         }
 
-        public async Task<User> GetByIdAsync(long id)
+        public async Task<User> GetByIdAsync(int id)
         {
             return await GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
         }

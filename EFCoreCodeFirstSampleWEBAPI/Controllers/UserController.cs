@@ -63,7 +63,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User userdto)
+        public async Task<IActionResult> Post([FromBody] UserDTO userdto)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody] User userdto)
+        public async Task<IActionResult> Put(long id, [FromBody] UserDTO userdto)
         {
             try
             {

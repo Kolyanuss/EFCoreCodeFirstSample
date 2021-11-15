@@ -17,16 +17,16 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
             return await GetAll().ToListAsync();
         }
 
-        public async Task<FilmsUsers> GetByPairIdAsync(long id1, long id2)
+        public async Task<FilmsUsers> GetByPairIdAsync(int id1, int id2)
         {
             return await GetByCondition(e => e.IdFilms == id1 && e.IdUser == id2).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<FilmsUsers>> GetAllUsersByFilmIdAsync(long id)
+        public async Task<IEnumerable<FilmsUsers>> GetAllUsersByFilmIdAsync(int id)
         {
             return await GetByCondition(e => e.IdFilms == id).ToListAsync();
         }
-        public async Task<IEnumerable<FilmsUsers>> GetAllFilmsByUserIdAsync(long id)
+        public async Task<IEnumerable<FilmsUsers>> GetAllFilmsByUserIdAsync(int id)
         {
             return await GetByCondition(e => e.IdUser == id).ToListAsync();
         }

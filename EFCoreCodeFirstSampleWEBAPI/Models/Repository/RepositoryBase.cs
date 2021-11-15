@@ -27,7 +27,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
 
         public void Add(T entity)
         {
-            MyAppContext.Set<T>().Add(entity);
+            MyAppContext.Set<T>().AddAsync(entity);
             MyAppContext.SaveChanges();
         }
 

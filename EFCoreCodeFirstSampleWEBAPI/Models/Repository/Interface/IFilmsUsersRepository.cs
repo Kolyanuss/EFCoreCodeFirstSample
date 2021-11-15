@@ -8,8 +8,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface
     public interface IFilmsUsersRepository : IRepositoryBase<FilmsUsers>
     {
         Task<IEnumerable<FilmsUsers>> GetAllAsync();
-        Task<FilmsUsers> GetByPairIdAsync(long id1, long id2);
-        Task<IEnumerable<FilmsUsers>> GetAllUsersByFilmIdAsync(long id);
-        Task<IEnumerable<FilmsUsers>> GetAllFilmsByUserIdAsync(long id);
+        Task<FilmsUsers> GetByPairIdAsync(int id1, int id2);
+        Task<IEnumerable<FilmsUsers>> GetAllUsersByFilmIdAsync(int id);
+        Task<IEnumerable<FilmsUsers>> GetAllFilmsByUserIdAsync(int id);
     }
 }

@@ -2,6 +2,7 @@ using EFCoreCodeFirstSampleWEBAPI.Models;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataManager;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
+using EFCoreCodeFirstSampleWEBAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace EFCoreCodeFirstSampleWEBAPI
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<MyAppContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FirstConect"]));
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            //services.AddScoped<IFilmsManager<Films>, FilmsManager>();
+            services.AddScoped<IServiceManager, ServiceManager>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
