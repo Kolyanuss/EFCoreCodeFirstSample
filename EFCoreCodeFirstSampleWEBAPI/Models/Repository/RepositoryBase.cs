@@ -15,9 +15,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             MyAppContext = myAppContext;
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return MyAppContext.Set<T>().ToList();
+            return MyAppContext.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
@@ -31,7 +31,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             MyAppContext.SaveChanges();
         }
 
-        public void Update(T dbEntity, T entity)
+        public void Update(T entity)
         {
             MyAppContext.Set<T>().Update(entity);
             MyAppContext.SaveChanges();

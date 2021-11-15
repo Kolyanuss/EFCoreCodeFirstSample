@@ -7,6 +7,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        User GetById(long id);
+        Task<IEnumerable<User>> GetAllAsync();
+        Task<User> GetByIdAsync(long id);
     }
 }

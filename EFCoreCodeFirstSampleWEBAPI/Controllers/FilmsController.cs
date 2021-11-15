@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
@@ -12,7 +12,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
     [ApiController]
     public class FilmsController : ControllerBase
     {
-        /*private readonly IFilmsManager<Films> _manager;
+        /*private readonly IFilmsManager<Films> _manager; //to do: add service
         public FilmsController(IFilmsManager<Films> manager)
         {
             _manager = manager;
@@ -28,11 +28,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Films
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                IEnumerable<Films> Filmes = _wraper.Films.GetAll();
+                IEnumerable<Films> Filmes = await _wraper.Films.GetAllAsync();
                 var Result = _mapper.Map<IEnumerable<FilmsDTO>>(Filmes);
                 return Ok(Result);
             }
@@ -44,12 +44,12 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         }
 
         // GET: api/Films/5
-        [HttpGet("{id}", Name = "GetFilm")]
-        public IActionResult GetById(long id)
+        [HttpGet("{id}", Name = "FilmById")]
+        public async Task<IActionResult> GetById(long id)
         {
             try
             {
-                Films films = _wraper.Films.GetById(id);
+                var films = await _wraper.Films.GetByIdAsync(id);
                 if (films == null)
                 {
                     return NotFound("The Films record couldn't be found.");
@@ -66,21 +66,50 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
         }
 
-        // POST: api/Films
-        [HttpPost]
-        public IActionResult Post([FromBody] Films films)
+        // GET: api/Films/5
+        [HttpGet("{id}/desc")]
+        public async Task<IActionResult> GetWithDetailsById(long id)
         {
             try
             {
+                var films = await _wraper.Films.GetByIdWithDetailsAsync(id);
                 if (films == null)
+                {
+                    return NotFound("The Films record couldn't be found.");
+                }
+                else
+                {
+                    var Result = _mapper.Map<FilmsDetailDTO>(films);
+                    return Ok(Result);
+                }
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // POST: api/Films
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] FilmsForCreationDto filmsDto)
+        {
+            try
+            {
+                if (filmsDto == null)
                 {
                     return BadRequest("Films is null.");
                 }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                var films = _mapper.Map<Films>(filmsDto);
                 _wraper.Films.Add(films);
+                var filmsDtoPrint = _mapper.Map<FilmsDTO>(films);
                 return CreatedAtRoute(
-                      "Get",
-                      new { Id = films.Id },
-                      films);
+                      "FilmById",
+                      new { Id = filmsDtoPrint.Id },
+                      filmsDtoPrint);
             }
             catch (System.Exception)
             {
@@ -90,20 +119,25 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Films/5
         [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody] Films films)
+        public async Task<IActionResult> Put(long id, [FromBody] FilmsForCreationDto filmsDto)
         {
             try
             {
-                if (films == null)
+                if (filmsDto == null)
                 {
                     return BadRequest("Films is null.");
                 }
-                Films ToUpdate = _wraper.Films.GetById(id);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                Films ToUpdate = await _wraper.Films.GetByIdAsync(id);
                 if (ToUpdate == null)
                 {
                     return NotFound("The Films record couldn't be found.");
                 }
-                _wraper.Films.Update(ToUpdate, films);
+                _mapper.Map(filmsDto, ToUpdate);
+                _wraper.Films.Update(ToUpdate);
                 return NoContent();
             }
             catch (System.Exception)
@@ -114,11 +148,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // DELETE: api/Films/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             try
             {
-                Films films = _wraper.Films.GetById(id);
+                Films films = await _wraper.Films.GetByIdAsync(id);
                 if (films == null)
                 {
                     return NotFound("The Films record couldn't be found.");

@@ -8,10 +8,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
 {
     public interface IRepositoryBase<T>
     {
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
         void Add(T entity);
-        void Update(T dbEntity, T entity);
+        void Update(T entity);
         void Delete(T entity);
     }
 }

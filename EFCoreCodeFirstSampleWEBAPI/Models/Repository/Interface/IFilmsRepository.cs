@@ -7,6 +7,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface
 {
     public interface IFilmsRepository : IRepositoryBase<Films>
     {
-        Films GetById(long id);
+        Task<IEnumerable<Films>> GetAllAsync();
+        Task<Films> GetByIdAsync(long id);
+        Task<Films> GetByIdWithDetailsAsync(long id);
     }
 }

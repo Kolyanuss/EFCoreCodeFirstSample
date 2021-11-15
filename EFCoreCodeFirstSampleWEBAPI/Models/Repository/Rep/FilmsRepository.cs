@@ -1,5 +1,8 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.Models.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
 {
@@ -8,9 +11,23 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
         public FilmsRepository(MyAppContext myAppContext) : base(myAppContext)
         {
         }
-        public Films GetById(long id)
+
+        public async Task<IEnumerable<Films>> GetAllAsync()
         {
-            return GetByCondition(e => e.Id == id).FirstOrDefault();
+            return await GetAll().ToListAsync();
         }
+
+        public async Task<Films> GetByIdAsync(long id)
+        {
+            return await GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
+        }
+
+        #region eager loading
+        public async Task<Films> GetByIdWithDetailsAsync(long id)
+        {
+            return await GetByCondition(e => e.Id == id).Include(e => e.Description).FirstOrDefaultAsync();
+        }
+        #endregion
+
     }
 }

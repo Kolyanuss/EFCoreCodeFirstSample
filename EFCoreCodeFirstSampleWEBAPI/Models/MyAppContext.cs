@@ -7,6 +7,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models
     {
         public DbSet<Films> Films { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<FilmsUsers> FilmsUsers { get; set; }
         public DbSet<Genres> Genres { get; set; }
         public DbSet<Description> Description { get; set; }
 
