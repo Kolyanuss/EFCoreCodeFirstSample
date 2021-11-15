@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using EFCoreCodeFirstSampleWEBAPI.Models;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI
 {
@@ -13,9 +9,19 @@ namespace EFCoreCodeFirstSampleWEBAPI
         public MappingProfile()
         {
             CreateMap<Films, FilmsDTO>();
+            CreateMap<Films, FilmsDetailDTO>();
             CreateMap<FilmsForCreationDto, Films>();
+
             CreateMap<User, UserDTO>();
             CreateMap<UserForCreationDto, User>();
+
+            CreateMap<Description, DescriptionDTO>();
+
+            CreateMap<FilmsUsers, FilmsUsersDTO>();
+            CreateMap<FilmsUsers, FilmsDetailUsersIdDTO>();
+            CreateMap<FilmsUsers, FilmsIdUsersDetailsDTO>();
+            CreateMap<FilmsUsers, FilmsUsers_DetailDTO>();
+            CreateMap<FilmsUsersDTO, FilmsUsers>();
         }
     }
 }

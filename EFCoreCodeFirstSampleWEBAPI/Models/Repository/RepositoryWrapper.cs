@@ -12,6 +12,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
         private MyAppContext _myAppContext;
         private IUserRepository _user;
         private IFilmsRepository _films;
+        private IFilmsUsersRepository _filmsUsers;
 
         public RepositoryWrapper(MyAppContext myAppContext)
         {
@@ -39,6 +40,18 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
                     _films = new FilmsRepository(_myAppContext);
                 }
                 return _films;
+            }
+        }
+
+        public IFilmsUsersRepository FilmsUsers
+        {
+            get
+            {
+                if (_filmsUsers == null)
+                {
+                    _filmsUsers = new FilmsUsersRepository(_myAppContext);
+                }
+                return _filmsUsers;
             }
         }
 
