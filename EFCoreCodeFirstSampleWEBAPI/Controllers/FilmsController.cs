@@ -66,6 +66,29 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
         }
 
+        // GET: api/Films/5
+        [HttpGet("{id}/desc")]
+        public async Task<IActionResult> GetWithDetailsById(long id)
+        {
+            try
+            {
+                var films = await _wraper.Films.GetByIdWithDetailsAsync(id);
+                if (films == null)
+                {
+                    return NotFound("The Films record couldn't be found.");
+                }
+                else
+                {
+                    var Result = _mapper.Map<FilmsDetailDTO>(films);
+                    return Ok(Result);
+                }
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // POST: api/Films
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FilmsForCreationDto filmsDto)
