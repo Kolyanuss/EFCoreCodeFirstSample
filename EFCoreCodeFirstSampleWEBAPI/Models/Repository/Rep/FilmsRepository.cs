@@ -17,13 +17,13 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository.Rep
             return await GetAll().ToListAsync();
         }
 
-        public async Task<Films> GetByIdAsync(long id)
+        public async Task<Films> GetByIdAsync(int id)
         {
             return await GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
         }
 
         #region eager loading
-        public async Task<Films> GetByIdWithDetailsAsync(long id)
+        public async Task<Films> GetByIdWithDetailsAsync(int id)
         {
             return await GetByCondition(e => e.Id == id).Include(e => e.Description).FirstOrDefaultAsync();
         }

@@ -5,6 +5,7 @@ using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using EFCoreCodeFirstSampleWEBAPI.Services;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
@@ -12,14 +13,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IRepositoryWrapper _wrapper;
-        private IMapper _mapper;
+        private readonly IServiceManager _serviceManager;
 
-        public UserController(IRepositoryWrapper wraper, IMapper mapper)
-        {
-            _wrapper = wraper;
-            _mapper = mapper;
-        }
+        public UserController(IServiceManager serviceManager) => _serviceManager = serviceManager;
 
         // GET: api/Users
         [HttpGet]
@@ -27,8 +23,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                IEnumerable<User> users = await _wrapper.User.GetAllAsync();
-                var Result = _mapper.Map<IEnumerable<UserDTO>>(users);
+                var Result = await _serviceManager.UsersService.Get();
                 return Ok(Result);
             }
             catch (System.Exception)
@@ -40,20 +35,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}", Name = "UserById")]
-        public async Task<IActionResult> GetById(long id)
+        public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                User user = await _wrapper.User.GetByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound("The User record couldn't be found.");
-                }
-                else
-                {
-                    var Result = _mapper.Map<UserDTO>(user);
-                    return Ok(Result);
-                }
+
+                var Result = await _serviceManager.UsersService.GetById(id);
+                return Ok(Result);
+
             }
             catch (System.Exception)
             {
@@ -63,21 +52,15 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User userdto)
+        public async Task<IActionResult> Post([FromBody] UserForCreationDto userdto)
         {
             try
             {
-                if (userdto == null)
-                {
-                    return BadRequest("User is null.");
-                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid model object");
                 }
-                var user = _mapper.Map<User>(userdto);
-                _wrapper.User.Add(user);
-                var userDtoPrint = _mapper.Map<FilmsDTO>(user);
+                var userDtoPrint = await _serviceManager.UsersService.Post(userdto);
                 return CreatedAtRoute(
                       "UserById",
                       new { Id = userDtoPrint.Id },
@@ -91,25 +74,15 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody] User userdto)
+        public async Task<IActionResult> Put(int id, [FromBody] UserForCreationDto userdto)
         {
             try
             {
-                if (userdto == null)
-                {
-                    return BadRequest("User is null.");
-                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid model object");
                 }
-                User ToUpdate = await _wrapper.User.GetByIdAsync(id);
-                if (ToUpdate == null)
-                {
-                    return NotFound("The User record couldn't be found.");
-                }
-                _mapper.Map(userdto, ToUpdate);
-                _wrapper.User.Update(ToUpdate);
+                await _serviceManager.UsersService.Put(id, userdto);
                 return NoContent();
             }
             catch (System.Exception)
@@ -120,16 +93,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                User user = await _wrapper.User.GetByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound("The User record couldn't be found.");
-                }
-                _wrapper.User.Delete(user);
+                await _serviceManager.UsersService.Delete(id);
                 return NoContent();
             }
             catch (System.Exception)

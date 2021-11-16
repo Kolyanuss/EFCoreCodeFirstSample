@@ -25,9 +25,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
             return MyAppContext.Set<T>().Where(expression);
         }
 
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
-            MyAppContext.Set<T>().Add(entity);
+            await MyAppContext.Set<T>().AddAsync(entity);
             MyAppContext.SaveChanges();
         }
 
