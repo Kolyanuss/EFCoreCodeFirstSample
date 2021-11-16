@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
 using System.Collections.Generic;
 

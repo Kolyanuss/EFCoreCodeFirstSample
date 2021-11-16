@@ -41,7 +41,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/FilmsUsers/5/4
         [HttpGet("{id1}/{id2}", Name = "FilmUserById")]
-        public async Task<IActionResult> GetById(long id1, long id2)
+        public async Task<IActionResult> GetById(int id1, int id2)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         #region explicit loading
         // GET: api/FilmsUsers/5/4
         [HttpGet("{id1}/{id2}/info")]
-        public async Task<IActionResult> GetByIdWithDetails(long id1, long id2)
+        public async Task<IActionResult> GetByIdWithDetails(int id1, int id2)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/FilmsUsers/filmsbyuser/5
         [HttpGet("filmsbyuser/{id1}")]
-        public async Task<IActionResult> GetFilmsByUserId(long id1)
+        public async Task<IActionResult> GetFilmsByUserId(int id1)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         #region explicit loading
         // GET: api/FilmsUsers/filmsbyuser/5/info
         [HttpGet("filmsbyuser/{id1}/info")]
-        public async Task<IActionResult> GetFilmsByUserIdDetails(long id1)
+        public async Task<IActionResult> GetFilmsByUserIdDetails(int id1)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/FilmsUsers/usersbyfilm/5
         [HttpGet("usersbyfilm/{id1}")]
-        public async Task<IActionResult> GetUsersByFilmId(long id1)
+        public async Task<IActionResult> GetUsersByFilmId(int id1)
         {
             try
             {
@@ -168,7 +168,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         #region explicit loading
         // GET: api/FilmsUsers/usersbyfilm/5/info
         [HttpGet("usersbyfilm/{id1}/info")]
-        public async Task<IActionResult> GetUsersByFilmIdDetails(long id1)
+        public async Task<IActionResult> GetUsersByFilmIdDetails(int id1)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/FilmsUsers/5/5
         [HttpPut("{id1}/{id2}")]
-        public async Task<IActionResult> Put(long id1, long id2, [FromBody] FilmsUsersDTO clearDto)
+        public async Task<IActionResult> Put(int id1, int id2, [FromBody] FilmsUsersDTO clearDto)
         {
             try
             {
@@ -256,7 +256,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // DELETE: api/FilmsUsers/5
         [HttpDelete("{id1}/{id2}")]
-        public async Task<IActionResult> Delete(long id1, long id2)
+        public async Task<IActionResult> Delete(int id1, int id2)
         {
             try
             {

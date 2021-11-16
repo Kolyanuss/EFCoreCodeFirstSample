@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EFCoreCodeFirstSampleWEBAPI.Services.Abstractions;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
 using AutoMapper;
+using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
+using EFCoreCodeFirstSampleWEBAPI.Services.Abstractions;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Services
 {
@@ -16,8 +13,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Services
         public ServiceManager(IRepositoryWrapper repositoryManager, IMapper mapper)
         {
             _lazyFilmService = new Lazy<IFilmsService>(() => new FilmsService(repositoryManager, mapper));
-            //_lazyUserService = new Lazy<IUsersService>(() => new UsersService(repositoryManager));
-            //_lazyFilmUserService = new Lazy<IFilmsUsersService>(() => new FilmsUsersService(repositoryManager));
+            _lazyUserService = new Lazy<IUsersService>(() => new UsersService(repositoryManager, mapper));
+            //_lazyFilmUserService = new Lazy<IFilmsUsersService>(() => new FilmsUsersService(repositoryManager, mapper));
         }
 
         public IFilmsService FilmsService => _lazyFilmService.Value;
