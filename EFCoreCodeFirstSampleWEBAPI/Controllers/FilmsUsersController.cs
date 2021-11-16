@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using EFCoreCodeFirstSampleWEBAPI.Services;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
@@ -13,14 +14,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
     [ApiController]
     public class FilmsUsersController : ControllerBase
     {
-        private IRepositoryWrapper _wraper;
-        private IMapper _mapper;
-
-        public FilmsUsersController(IRepositoryWrapper wraper, IMapper mapper)
-        {
-            _wraper = wraper;
-            _mapper = mapper;
-        }
+        private readonly IServiceManager _serviceManager;
+        public FilmsUsersController(IServiceManager serviceManager) => _serviceManager = serviceManager;
 
         // GET: api/FilmsUsers
         [HttpGet]
@@ -28,8 +23,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                IEnumerable<FilmsUsers> filmsUsers = await _wraper.FilmsUsers.GetAllAsync();
-                var Result = _mapper.Map<IEnumerable<FilmsUsersDTO>>(filmsUsers);
+                var Result = await _serviceManager.FilmsUsersService.Get();
                 return Ok(Result);
             }
             catch (System.Exception)
@@ -45,16 +39,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var films = await _wraper.FilmsUsers.GetByPairIdAsync(id1, id2);
-                if (films == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    var Result = _mapper.Map<FilmsUsersDTO>(films);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetById(id1, id2);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -68,19 +54,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var entity = await _wraper.FilmsUsers.GetByPairIdAsync(id1, id2);
-                if (entity == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    await _wraper.Films.GetByCondition(film => film.Id == entity.IdFilms).LoadAsync();
-                    await _wraper.User.GetByCondition(user => user.Id == entity.IdUser).LoadAsync();
-                    //GetByCondition(e => e.IdFilms == id1 && e.IdUser == id2).LoadAsync();
-                    var Result = _mapper.Map<FilmsUsers_DetailDTO>(entity);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetByIdWithDetails(id1, id2);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -95,16 +70,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var entity = await _wraper.FilmsUsers.GetAllFilmsByUserIdAsync(id1);
-                if (entity == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    var Result = _mapper.Map<IEnumerable<FilmsUsersDTO>>(entity);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetFilmsByUserId(id1);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -119,21 +86,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var entity = await _wraper.FilmsUsers.GetAllFilmsByUserIdAsync(id1);
-                if (entity == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    //explicit loading
-                    foreach (var it in entity)
-                    {
-                        await _wraper.Films.GetByCondition(film => film.Id == it.IdFilms).LoadAsync();
-                    }
-                    var Result = _mapper.Map<IEnumerable<FilmsDetailUsersIdDTO>>(entity);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetFilmsByUserIdDetails(id1);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -148,16 +102,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var entity = await _wraper.FilmsUsers.GetAllUsersByFilmIdAsync(id1);
-                if (entity == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    var Result = _mapper.Map<IEnumerable<FilmsUsersDTO>>(entity);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetUsersByFilmId(id1);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -172,21 +118,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var entity = await _wraper.FilmsUsers.GetAllUsersByFilmIdAsync(id1);
-                if (entity == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                else
-                {
-                    //explicit loading
-                    foreach (var it in entity)
-                    {
-                        await _wraper.User.GetByCondition(user => user.Id == it.IdUser).LoadAsync();
-                    }
-                    var Result = _mapper.Map<IEnumerable<FilmsIdUsersDetailsDTO>>(entity);
-                    return Ok(Result);
-                }
+                var Result = await _serviceManager.FilmsUsersService.GetUsersByFilmIdDetails(id1);
+                return Ok(Result);
             }
             catch (System.Exception)
             {
@@ -195,25 +128,17 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         }
         #endregion
 
-
-
         // POST: api/FilmsUsers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FilmsUsersDTO filmsDto)
         {
             try
             {
-                if (filmsDto == null)
-                {
-                    return BadRequest("FilmsUsers is null.");
-                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid model object");
                 }
-                var clearEntity = _mapper.Map<FilmsUsers>(filmsDto);
-                _wraper.FilmsUsers.Add(clearEntity);
-                var filmsDtoPrint = _mapper.Map<FilmsUsersDTO>(clearEntity);
+                var filmsDtoPrint = await _serviceManager.FilmsUsersService.Post(filmsDto);
                 return CreatedAtRoute(
                       "FilmUserById",
                       new { Id1 = filmsDtoPrint.IdFilms, Id2 = filmsDtoPrint.IdUser },
@@ -231,21 +156,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                if (clearDto == null)
-                {
-                    return BadRequest("FilmsUsers is null.");
-                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid model object");
                 }
-                FilmsUsers ToUpdate = await _wraper.FilmsUsers.GetByPairIdAsync(id1, id2);
-                if (ToUpdate == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                _mapper.Map(clearDto, ToUpdate);
-                _wraper.FilmsUsers.Update(ToUpdate);
+                await _serviceManager.FilmsUsersService.Put(id1, id2, clearDto);
                 return NoContent();
             }
             catch (System.Exception)
@@ -260,12 +175,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                FilmsUsers films = await _wraper.FilmsUsers.GetByPairIdAsync(id1, id2);
-                if (films == null)
-                {
-                    return NotFound("The FilmsUsers record couldn't be found.");
-                }
-                _wraper.FilmsUsers.Delete(films);
+                await _serviceManager.FilmsUsersService.Delete(id1, id2);
                 return NoContent();
             }
             catch (System.Exception)

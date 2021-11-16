@@ -10,7 +10,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Models.Repository
     {
         IQueryable<T> GetAll();
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
-        void Add(T entity);
+        Task Add(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

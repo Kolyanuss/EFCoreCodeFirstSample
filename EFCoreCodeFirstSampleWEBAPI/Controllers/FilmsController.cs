@@ -14,7 +14,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly IServiceManager _serviceManager;
-
         public FilmsController(IServiceManager serviceManager) => _serviceManager = serviceManager;
 
         // GET: api/Films
@@ -68,7 +67,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-                var filmsDtoPrint = _serviceManager.FilmsService.Post(filmsDto);
+                var filmsDtoPrint = await _serviceManager.FilmsService.Post(filmsDto);
                 return CreatedAtRoute(
                       "FilmById",
                       new { Id = filmsDtoPrint.Id },

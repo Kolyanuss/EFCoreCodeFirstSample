@@ -52,7 +52,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserDTO userdto)
+        public async Task<IActionResult> Post([FromBody] UserForCreationDto userdto)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                var userDtoPrint = _serviceManager.UsersService.Post(userdto);
+                var userDtoPrint = await _serviceManager.UsersService.Post(userdto);
                 return CreatedAtRoute(
                       "UserById",
                       new { Id = userDtoPrint.Id },
@@ -74,7 +74,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UserDTO userdto)
+        public async Task<IActionResult> Put(int id, [FromBody] UserForCreationDto userdto)
         {
             try
             {

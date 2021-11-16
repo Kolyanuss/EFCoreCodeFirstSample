@@ -40,18 +40,18 @@ namespace EFCoreCodeFirstSampleWEBAPI.Services
             }
         }
 
-        public UserDTO Post(UserDTO userdto)
+        public async Task<UserDTO> Post(UserForCreationDto userdto)
         {
             if (userdto == null)
             {
                 throw new BadRequestException("User is null.");
             }
             var user = _mapper.Map<User>(userdto);
-            _wrapper.User.Add(user);
+            await _wrapper.User.Add(user);
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task Put(int id, UserDTO userdto)
+        public async Task Put(int id, UserForCreationDto userdto)
         {
             if (userdto == null)
             {

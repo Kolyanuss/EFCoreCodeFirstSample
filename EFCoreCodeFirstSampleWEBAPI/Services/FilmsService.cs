@@ -54,14 +54,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.Services
             }
         }
 
-        public FilmsDTO Post(FilmsForCreationDto filmsDto)
+        public async Task<FilmsDTO> Post(FilmsForCreationDto filmsDto)
         {
             if (filmsDto == null)
             {
                 throw new BadRequestException("Films is null.");
             }
             var films = _mapper.Map<Films>(filmsDto);
-            _wraper.Films.Add(films);
+            await _wraper.Films.Add(films);
             return _mapper.Map<FilmsDTO>(films);
         }
 

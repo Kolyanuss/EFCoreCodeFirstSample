@@ -14,7 +14,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Services
         {
             _lazyFilmService = new Lazy<IFilmsService>(() => new FilmsService(repositoryManager, mapper));
             _lazyUserService = new Lazy<IUsersService>(() => new UsersService(repositoryManager, mapper));
-            //_lazyFilmUserService = new Lazy<IFilmsUsersService>(() => new FilmsUsersService(repositoryManager, mapper));
+            _lazyFilmUserService = new Lazy<IFilmsUsersService>(() => new FilmsUsersService(repositoryManager, mapper));
         }
 
         public IFilmsService FilmsService => _lazyFilmService.Value;

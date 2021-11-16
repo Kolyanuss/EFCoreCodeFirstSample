@@ -9,8 +9,8 @@ namespace EFCoreCodeFirstSampleWEBAPI.Services.Abstractions
     {
         public Task<IEnumerable<UserDTO>> Get();
         public Task<UserDTO> GetById(int id);
-        public UserDTO Post(UserDTO userdto);
-        public Task Put(int id, UserDTO userdto);
+        public Task<UserDTO> Post(UserForCreationDto userdto);
+        public Task Put(int id, UserForCreationDto userdto);
         public Task Delete(int id);
 
     }
