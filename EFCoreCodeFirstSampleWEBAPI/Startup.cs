@@ -1,7 +1,5 @@
 using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataManager;
 using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
 using EFCoreCodeFirstSampleWEBAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
