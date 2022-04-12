@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
-using EFCoreCodeFirstSampleWEBAPI.Services;
+﻿using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
@@ -27,7 +23,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
             catch (System.Exception)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error1");
             }
         }
 

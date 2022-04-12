@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreCodeFirstSampleWEBAPI", "EFCoreCodeFirstSampleWEBAPI\EFCoreCodeFirstSampleWEBAPI.csproj", "{94EEC534-2DE0-4561-A669-2B3126065387}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreCodeFirstSampleWEBAPI.DAL", "EFCoreCodeFirstSampleWEBAPI.DAL\EFCoreCodeFirstSampleWEBAPI.DAL.csproj", "{940ACA75-8141-4FA6-B3D6-B1AC6EAED8EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreCodeFirstSampleWEBAPI.DAL", "EFCoreCodeFirstSampleWEBAPI.DAL\EFCoreCodeFirstSampleWEBAPI.DAL.csproj", "{940ACA75-8141-4FA6-B3D6-B1AC6EAED8EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreCodeFirstSampleWEBAPI.BLL", "EFCoreCodeFirstSampleWEBAPI.BLL\EFCoreCodeFirstSampleWEBAPI.BLL.csproj", "{1514F9FC-400B-42C8-8EA4-CEA3C48443F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{940ACA75-8141-4FA6-B3D6-B1AC6EAED8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{940ACA75-8141-4FA6-B3D6-B1AC6EAED8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{940ACA75-8141-4FA6-B3D6-B1AC6EAED8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1514F9FC-400B-42C8-8EA4-CEA3C48443F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1514F9FC-400B-42C8-8EA4-CEA3C48443F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1514F9FC-400B-42C8-8EA4-CEA3C48443F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1514F9FC-400B-42C8-8EA4-CEA3C48443F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

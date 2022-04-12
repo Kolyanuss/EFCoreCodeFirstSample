@@ -1,12 +1,7 @@
-﻿using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
+﻿using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using EFCoreCodeFirstSampleWEBAPI.Services;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {

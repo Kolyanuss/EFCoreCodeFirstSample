@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCoreCodeFirstSampleWEBAPI.DAL\EFCoreCodeFirstSampleWEBAPI.DAL.csproj" />
+    <ProjectReference Include="..\EFCoreCodeFirstSampleWEBAPI.BLL\EFCoreCodeFirstSampleWEBAPI.BLL.csproj" />
   </ItemGroup>
 
 </Project>

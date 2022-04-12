@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EFCoreCodeFirstSampleWEBAPI.Models
+namespace EFCoreCodeFirstSampleWEBAPI.DAL.Models
 {
     public class Films
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
 
 namespace EFCoreCodeFirstSampleWEBAPI
 {
@@ -8,9 +8,11 @@ namespace EFCoreCodeFirstSampleWEBAPI
     {
         public MappingProfile()
         {
-            CreateMap<Films, FilmsDTO>();
+            CreateMap<Films, FilmsDTO>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.ReleaseData));
             CreateMap<Films, FilmsDetailDTO>();
-            CreateMap<FilmsForCreationDto, Films>();
+            CreateMap<FilmsForCreationDto, Films>()
+                .ForMember(dest => dest.ReleaseData, opt => opt.MapFrom(src => src.Data));
 
             CreateMap<User, UserDTO>();
             CreateMap<UserForCreationDto, User>();

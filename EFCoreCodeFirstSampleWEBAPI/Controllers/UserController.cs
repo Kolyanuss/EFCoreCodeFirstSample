@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
-using System.Collections.Generic;
+﻿using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.Services;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
@@ -39,7 +35,6 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
         {
             try
             {
-
                 var Result = await _serviceManager.UsersService.GetById(id);
                 return Ok(Result);
 
