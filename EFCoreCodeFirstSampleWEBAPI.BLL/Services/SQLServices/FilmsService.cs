@@ -5,6 +5,7 @@ using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces.ISQLServices;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
+using EFCoreCodeFirstSampleWEBAPI.DAL.Specifications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,6 +30,22 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
         public async Task<FilmsDTO> GetById(int id)
         {
             var films = await _wraper.Films.GetByIdAsync(id);
+
+            if (films == null)
+            {
+                throw new FilmsNotFoundException(id);
+            }
+            else
+            {
+                return _mapper.Map<FilmsDTO>(films);
+            }
+        }
+
+        public async Task<FilmsDTO> GetByIdSpec(int id)
+        {
+            var specification = new GetFilmByIdAsync(id);
+            var films = _wraper.Films.FindWithSpecificationPattern(specification);
+
             if (films == null)
             {
                 throw new FilmsNotFoundException(id);
@@ -63,7 +80,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             return _mapper.Map<FilmsDTO>(films);
         }
 
-        public async Task Put(int id,FilmsForCreationDto filmsDto)
+        public async Task Put(int id, FilmsForCreationDto filmsDto)
         {
             if (filmsDto == null)
             {

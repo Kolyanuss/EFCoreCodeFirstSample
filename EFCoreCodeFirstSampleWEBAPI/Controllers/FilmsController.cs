@@ -42,6 +42,20 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
         }
 
+        [HttpGet("Spec/{id}", Name = "FilmByIdSpec")]
+        public async Task<IActionResult> GetByIdSpec(int id)
+        {
+            try
+            {
+                var Result = await _serviceManager.FilmsService.GetByIdSpec(id);
+                return Ok(Result);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // GET: api/Films/5
         [HttpGet("{id}/desc")]
         public async Task<IActionResult> GetWithDetailsById(int id)

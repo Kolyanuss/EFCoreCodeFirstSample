@@ -1,6 +1,8 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
+using EFCoreCodeFirstSampleWEBAPI.DAL.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -23,6 +25,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.DAL.Repository
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
             return MyAppContext.Set<T>().Where(expression);
+        }
+
+        public IEnumerable<T> FindWithSpecificationPattern(ISpecification<T> specification = null)
+        {
+            return SpecificationEvaluator<T>.GetQuery(MyAppContext.Set<T>().AsQueryable(), specification);
         }
 
         public async Task Add(T entity)
