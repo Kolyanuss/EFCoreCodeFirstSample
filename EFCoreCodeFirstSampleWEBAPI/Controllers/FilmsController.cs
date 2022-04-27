@@ -1,4 +1,6 @@
 ﻿using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -36,6 +38,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 var Result = await _serviceManager.FilmsService.GetById(id);
                 return Ok(Result);
             }
+            catch (FilmsNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
+            }
             catch (System.Exception)
             {
                 return StatusCode(500, "Internal server error");
@@ -49,6 +55,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             {
                 var Result = await _serviceManager.FilmsService.GetByIdSpec(id);
                 return Ok(Result);
+            }
+            catch (FilmsNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
             }
             catch (System.Exception)
             {
@@ -64,6 +74,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             {
                 var Result = await _serviceManager.FilmsService.GetWithDetailsById(id);
                 return Ok(Result);
+            }
+            catch (FilmsNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
             }
             catch (System.Exception)
             {
@@ -82,6 +96,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                       "FilmById",
                       new { Id = filmsDtoPrint.Id },
                       filmsDtoPrint);
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(ex.Data);
             }
             catch (System.Exception)
             {
@@ -116,6 +134,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             {
                 await _serviceManager.FilmsService.Delete(id);
                 return NoContent();
+            }
+            catch (FilmsNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
             }
             catch (System.Exception)
             {

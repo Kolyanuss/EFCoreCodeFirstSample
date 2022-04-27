@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces.ISQLServices;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
 using System;
@@ -13,7 +14,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
 {
     public class FilmsServiceFake : IFilmsService
     {
-        private readonly IEnumerable<Films> _filmesList = null;
+        private readonly IEnumerable<Films> _filmesList;
         private readonly IMapper _mapper;
         public FilmsServiceFake()
         {
@@ -33,15 +34,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
                 }
             };
 
-            //var config = new MapperConfiguration(cfg =>
-            //        cfg.CreateMap<Films, FilmsDTO>()
-            //    );
-            var config2 = new MapperConfiguration(cfg =>
+            var config = new MapperConfiguration(cfg =>
                     cfg.AddProfile<MappingProfile>()
                 );
-
-            _mapper = new Mapper(config2);
-
+            _mapper = new Mapper(config);
         }
 
 
@@ -68,24 +64,43 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
             throw new NotImplementedException();
         }
 
-        public Task<FilmsDetailDTO> GetWithDetailsById(int id)
+        public async Task<FilmsDetailDTO> GetWithDetailsById(int id)
+        {
+            var films = _filmesList.Where(a => a.Id == id).FirstOrDefault();
+            if (films == null)
+            {
+                throw new FilmsNotFoundException(id);
+            }
+            else
+            {
+                return _mapper.Map<FilmsDetailDTO>(films);
+            }
+        }
+
+        public async Task<FilmsDTO> Post(FilmsForCreationDto filmsDto)
+        {
+            if (filmsDto == null)
+            {
+                throw new BadRequestException("Films is null.");
+            }
+            var films = _mapper.Map<Films>(filmsDto);
+            _filmesList.Append(films);            
+            return _mapper.Map<FilmsDTO>(films);
+        }
+
+        public async Task Put(int id, FilmsForCreationDto filmsDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<FilmsDTO> Post(FilmsForCreationDto filmsDto)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task Put(int id, FilmsForCreationDto filmsDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
+            Films films = _filmesList.Where(a => a.Id == id).FirstOrDefault();
+            if (films == null)
+            {
+                throw new FilmsNotFoundException(id);
+            }
+            (_filmesList as List<Films>).RemoveAt(id);
         }
     }
 }

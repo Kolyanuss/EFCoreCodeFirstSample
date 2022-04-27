@@ -75,6 +75,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new BadRequestException("Films is null.");
             }
+            if (filmsDto.NameFilm == null)
+            {
+                throw new BadRequestException("Parametr NameFilm in Films is null.");
+            }
             var films = _mapper.Map<Films>(filmsDto);
             await _wraper.Films.Add(films);
             return _mapper.Map<FilmsDTO>(films);
