@@ -1,17 +1,16 @@
+using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
-using EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices;
 using EFCoreCodeFirstSampleWEBAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Collections.Generic;
 using Xunit;
-using EFCoreCodeFirstSampleWEBAPI.DAL.UnitOfWork;
 
 namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
 {
     public class FilmsControllerTest
     {
-        private readonly FilmsController _controller;
         private readonly IServiceManager _service;
+        private readonly FilmsController _controller;
 
         public FilmsControllerTest()
         {
@@ -24,7 +23,16 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
         {
             var Result = _controller.GetAll();
 
-            Assert.IsType<OkObjectResult>(Result);
+            Assert.IsType<OkObjectResult>(Result.Result as OkObjectResult);
+        }
+
+        [Fact]
+        public void GetAll_DataExist_ReturnsAllItems()
+        {
+            var Result = _controller.GetAll().Result as OkObjectResult;
+
+            var items = Assert.IsType<List<FilmsDTO>>(Result.Value);
+            Assert.Equal(2, items.Count);
         }
     }
 }

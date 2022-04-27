@@ -23,7 +23,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
             catch (System.Exception)
             {
-                return StatusCode(500, "Internal server error1");
+                return StatusCode(500, "Internal server error");
             }
         }
 
