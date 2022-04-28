@@ -90,6 +90,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new BadRequestException("Films is null.");
             }
+            if (filmsDto.NameFilm == null)
+            {
+                throw new BadRequestException("Parametr NameFilm in Films is null.");
+            }
             Films ToUpdate = await _wraper.Films.GetByIdAsync(id);
             if (ToUpdate == null)
             {

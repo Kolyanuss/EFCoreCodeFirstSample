@@ -120,6 +120,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 await _serviceManager.FilmsService.Put(id, filmsDto);
                 return NoContent();
             }
+            catch (FilmsNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(ex.Data);
+            }
             catch (System.Exception)
             {
                 return StatusCode(500, "Internal server error");

@@ -112,6 +112,56 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
             Assert.Equal(film.NameFilm, (Result.Value as FilmsDTO).NameFilm);
         }
 
+        [Fact]
+        public void Put_ExistIdAndCorrectEntityPassed_ReturnsNoContentResult()
+        {
+            var id = 1;
+            var film = new FilmsForCreationDto()
+            {
+                NameFilm = "Film about Put operetion",
+                Country = "USA",
+                FKDescriptionId = 0,
+                Data = new System.DateTime(2020, 2, 20)
+            };
+
+            var Result = _controller.Put(id, film).Result;
+
+            Assert.IsType<NoContentResult>(Result);
+        }
+
+        [Fact]
+        public void Put_UnknownIdAndCorrectEntityPassed_ReturnsNotFoundObjectResult()
+        {
+            var id = -1;
+            var film = new FilmsForCreationDto()
+            {
+                NameFilm = "Film about Put operetion",
+                Country = "USA",
+                FKDescriptionId = 0,
+                Data = new System.DateTime(2020, 2, 20)
+            };
+
+            var Result = _controller.Put(id, film).Result;
+
+            Assert.IsType<NotFoundObjectResult>(Result);
+        }
+
+        [Fact]
+        public void Put_ExistIdAndIncorrectEntityPassed_ReturnsBadRequestResult()
+        {
+            var id = 1;
+            var film = new FilmsForCreationDto()
+            {
+                Country = "USA",
+                FKDescriptionId = 0,
+                Data = new System.DateTime(2020, 2, 20)
+            };
+
+            var Result = _controller.Put(id, film).Result;
+
+            Assert.IsType<BadRequestObjectResult>(Result);
+        }
+
         [Theory]
         [InlineData(10)]
         [InlineData(-1)]

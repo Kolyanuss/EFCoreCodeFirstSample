@@ -83,6 +83,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
             {
                 throw new BadRequestException("Films is null.");
             }
+            if (filmsDto.NameFilm == null)
+            {
+                throw new BadRequestException("Parametr NameFilm in Films is null.");
+            }
             var films = _mapper.Map<Films>(filmsDto);
             _filmesList.Append(films);            
             return _mapper.Map<FilmsDTO>(films);
@@ -90,7 +94,23 @@ namespace EFCoreCodeFirstSampleWEBAPI.UnitTests
 
         public async Task Put(int id, FilmsForCreationDto filmsDto)
         {
-            throw new NotImplementedException();
+            if (filmsDto == null)
+            {
+                throw new BadRequestException("Films is null.");
+            }
+            if (filmsDto.NameFilm == null)
+            {
+                throw new BadRequestException("Parametr NameFilm in Films is null.");
+            }
+            Films ToUpdate = _filmesList.Where(a => a.Id == id).FirstOrDefault();
+            if (ToUpdate == null)
+            {
+                throw new FilmsNotFoundException(id);
+            }
+            _mapper.Map(filmsDto, ToUpdate);
+            
+            var obj = _filmesList.FirstOrDefault(x => x.Id == id);
+            if (obj != null) obj = ToUpdate;
         }
 
         public async Task Delete(int id)
