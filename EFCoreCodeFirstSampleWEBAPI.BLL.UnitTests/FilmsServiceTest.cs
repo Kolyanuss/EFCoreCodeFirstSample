@@ -1,18 +1,13 @@
 ﻿using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EFCoreCodeFirstSampleWEBAPI.BLL.UnitTests.Mocks;
-using EFCoreCodeFirstSampleWEBAPI.DAL.UnitOfWork;
-using Moq;
-using Xunit;
 using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
-using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices;
+using EFCoreCodeFirstSampleWEBAPI.BLL.UnitTests.Mocks;
+using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
+using Moq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace EFCoreCodeFirstSampleWEBAPI.BLL.UnitTests
 {
