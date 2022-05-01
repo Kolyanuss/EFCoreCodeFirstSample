@@ -2,6 +2,8 @@
 using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,6 +18,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Films
         [HttpGet]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -31,6 +36,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Films/5
         [HttpGet("{id}", Name = "FilmById")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -48,7 +57,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
         }
 
-        [HttpGet("Spec/{id}", Name = "FilmByIdSpec")]
+        //[HttpGet("Spec/{id}", Name = "FilmByIdSpec")]
         public async Task<IActionResult> GetByIdSpec(int id)
         {
             try
@@ -68,6 +77,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Films/5
         [HttpGet("{id}/desc")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetWithDetailsById(int id)
         {
             try
@@ -87,6 +100,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Films
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post([FromBody] FilmsForCreationDto filmsDto)
         {
             try
@@ -109,6 +125,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Films/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Put(int id, [FromBody] FilmsForCreationDto filmsDto)
         {
             try
@@ -136,6 +156,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // DELETE: api/Films/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
             try

@@ -47,6 +47,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new BadRequestException("User is null.");
             }
+            if (userdto.UserName == null)
+            {
+                throw new BadRequestException("Parametr UserName in USers is null.");
+            }
             var user = _mapper.Map<User>(userdto);
             await _wrapper.User.Add(user);
             return _mapper.Map<UserDTO>(user);
@@ -57,6 +61,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             if (userdto == null)
             {
                 throw new BadRequestException("User is null.");
+            }
+            if (userdto.UserName == null)
+            {
+                throw new BadRequestException("Parametr UserName in USers is null.");
             }
             User ToUpdate = await _wrapper.User.GetByIdAsync(id);
             if (ToUpdate == null)
