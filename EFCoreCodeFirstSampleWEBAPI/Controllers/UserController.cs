@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataTransferObjects;
-using System.Collections.Generic;
+﻿using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using AutoMapper;
-using EFCoreCodeFirstSampleWEBAPI.Services;
 
 namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 {
@@ -19,7 +19,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -35,14 +38,21 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}", Name = "UserById")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-
                 var Result = await _serviceManager.UsersService.GetById(id);
                 return Ok(Result);
 
+            }
+            catch (UsersNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
             }
             catch (System.Exception)
             {
@@ -52,6 +62,9 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post([FromBody] UserForCreationDto userdto)
         {
             try
@@ -66,6 +79,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                       new { Id = userDtoPrint.Id },
                       userDtoPrint);
             }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(ex.Data);
+            }
             catch (System.Exception)
             {
                 return StatusCode(500, "Internal server error");
@@ -74,6 +91,10 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Put(int id, [FromBody] UserForCreationDto userdto)
         {
             try
@@ -85,6 +106,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
                 await _serviceManager.UsersService.Put(id, userdto);
                 return NoContent();
             }
+            catch (UsersNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(ex.Data);
+            }
             catch (System.Exception)
             {
                 return StatusCode(500, "Internal server error");
@@ -93,12 +122,19 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 await _serviceManager.UsersService.Delete(id);
                 return NoContent();
+            }
+            catch (UsersNotFoundException)
+            {
+                return NotFound("No item found with index " + id);
             }
             catch (System.Exception)
             {

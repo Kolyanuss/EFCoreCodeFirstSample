@@ -1,8 +1,8 @@
-using EFCoreCodeFirstSampleWEBAPI.Models;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataManager;
-using EFCoreCodeFirstSampleWEBAPI.Models.Repository;
-using EFCoreCodeFirstSampleWEBAPI.Models.DataManager.Interface;
-using EFCoreCodeFirstSampleWEBAPI.Services;
+using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces;
+using EFCoreCodeFirstSampleWEBAPI.BLL.ServiceWrapper;
+using EFCoreCodeFirstSampleWEBAPI.DAL;
+using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
+using EFCoreCodeFirstSampleWEBAPI.DAL.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
