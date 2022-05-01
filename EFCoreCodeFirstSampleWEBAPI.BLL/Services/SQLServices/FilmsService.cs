@@ -35,10 +35,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new FilmsNotFoundException(id);
             }
-            else
-            {
-                return _mapper.Map<FilmsDTO>(films);
-            }
+            return _mapper.Map<FilmsDTO>(films);
         }
 
         public async Task<FilmsDTO> GetByIdSpec(int id)
@@ -50,10 +47,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new FilmsNotFoundException(id);
             }
-            else
-            {
-                return _mapper.Map<FilmsDTO>(films);
-            }
+            return _mapper.Map<FilmsDTO>(films);
         }
 
         public async Task<FilmsDetailDTO> GetWithDetailsById(int id)
@@ -63,10 +57,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new FilmsNotFoundException(id);
             }
-            else
-            {
-                return _mapper.Map<FilmsDetailDTO>(films);
-            }
+            return _mapper.Map<FilmsDetailDTO>(films);
         }
 
         public async Task<FilmsDTO> Post(FilmsForCreationDto filmsDto)
