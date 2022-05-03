@@ -9,4 +9,6 @@
 * -targetdir - Path to generate the report
 * -reporttypes - File type of the report
 
-## [last  report](https://kolyanuss.github.io/EFCoreCodeFirstSample/reportHtml/)
+## last report
+* [BLL](https://kolyanuss.github.io/EFCoreCodeFirstSample/reportHtml/)
+* [WEB](https://kolyanuss.github.io/EFCoreCodeFirstSample/reportHtml_2/)
