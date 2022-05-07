@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.2" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EFCoreCodeFirstSampleWEBAPI.DAL\EFCoreCodeFirstSampleWEBAPI.DAL.csproj" />
+    <ProjectReference Include="..\EventBus.Messages\EventBus.Messages.csproj" />
   </ItemGroup>
 
 </Project>
