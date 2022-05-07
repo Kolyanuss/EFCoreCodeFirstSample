@@ -3,6 +3,7 @@ using EFCoreCodeFirstSampleWEBAPI.BLL.ServiceWrapper;
 using EFCoreCodeFirstSampleWEBAPI.DAL;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
 using EFCoreCodeFirstSampleWEBAPI.DAL.UnitOfWork;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+
 
 namespace EFCoreCodeFirstSampleWEBAPI
 {
@@ -33,6 +35,13 @@ namespace EFCoreCodeFirstSampleWEBAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFCoreCodeFirstSampleWEBAPI", Version = "v1" });
+            });
+
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config => {
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                });
             });
         }
 
