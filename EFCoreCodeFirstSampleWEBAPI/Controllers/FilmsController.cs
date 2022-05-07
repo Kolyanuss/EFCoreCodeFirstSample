@@ -57,7 +57,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.Controllers
             }
         }
 
-        //[HttpGet("Spec/{id}", Name = "FilmByIdSpec")]
+        [HttpGet("Spec/{id}", Name = "FilmByIdSpec")]
         public async Task<IActionResult> GetByIdSpec(int id)
         {
             try
