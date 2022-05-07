@@ -16,7 +16,7 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.ServiceWrapper
         public ServiceManager(IRepositoryWrapper repositoryManager, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             _lazyFilmService = new Lazy<IFilmsService>(() => new FilmsService(repositoryManager, mapper, publishEndpoint));
-            _lazyUserService = new Lazy<IUsersService>(() => new UsersService(repositoryManager, mapper));
+            _lazyUserService = new Lazy<IUsersService>(() => new UsersService(repositoryManager, mapper, publishEndpoint));
             _lazyFilmUserService = new Lazy<IFilmsUsersService>(() => new FilmsUsersService(repositoryManager, mapper));
         }
 
