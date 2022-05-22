@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EFCoreCodeFirstSampleWEBAPI.BLL.DataTransferObjects;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
+using EventBus.Messages.Events;
 
 namespace EFCoreCodeFirstSampleWEBAPI
 {
@@ -24,6 +25,9 @@ namespace EFCoreCodeFirstSampleWEBAPI
             CreateMap<FilmsUsers, FilmsIdUsersDetailsDTO>();
             CreateMap<FilmsUsers, FilmsUsers_DetailDTO>();
             CreateMap<FilmsUsersDTO, FilmsUsers>();
+
+            CreateMap<FilmsForCreationDto, FilmsDtoEvent>().ReverseMap();
+            CreateMap<UserForCreationDto, UsersDtoEvent>().ReverseMap();
         }
     }
 }

@@ -5,6 +5,9 @@ using EFCoreCodeFirstSampleWEBAPI.BLL.Exceptions.Abstract;
 using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces.ISQLServices;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
+using EventBus.Messages.Events;
+using MassTransit;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,11 +18,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
     {
         private IRepositoryWrapper _wrapper;
         private IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public UsersService(IRepositoryWrapper wraper, IMapper mapper)
+
+        public UsersService(IRepositoryWrapper wraper, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             _wrapper = wraper;
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
 
         public async Task<IEnumerable<UserDTO>> Get()
@@ -53,6 +59,11 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             }
             var user = _mapper.Map<User>(userdto);
             await _wrapper.User.Add(user);
+
+            // send checkout event to rabbitmq
+            var eventMessage = _mapper.Map<UsersDtoEvent>(userdto);
+            await _publishEndpoint.Publish<UsersDtoEvent>(eventMessage);
+
             return _mapper.Map<UserDTO>(user);
         }
 

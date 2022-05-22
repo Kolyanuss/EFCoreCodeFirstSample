@@ -6,8 +6,11 @@ using EFCoreCodeFirstSampleWEBAPI.BLL.Interfaces.ISQLServices;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Interfaces;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Models;
 using EFCoreCodeFirstSampleWEBAPI.DAL.Specifications;
+using MassTransit;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventBus.Messages.Events;
 
 namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
 {
@@ -15,11 +18,13 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
     {
         private IRepositoryWrapper _wraper;
         private IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public FilmsService(IRepositoryWrapper wraper, IMapper mapper)
+        public FilmsService(IRepositoryWrapper wraper, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             _wraper = wraper;
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
         public async Task<IEnumerable<FilmsDTO>> GetAll()
         {
@@ -70,8 +75,14 @@ namespace EFCoreCodeFirstSampleWEBAPI.BLL.Services.SQLServices
             {
                 throw new BadRequestException("Parametr NameFilm in Films is null.");
             }
+
             var films = _mapper.Map<Films>(filmsDto);
             await _wraper.Films.Add(films);
+
+            // send checkout event to rabbitmq
+            var eventMessage = _mapper.Map<FilmsDtoEvent>(filmsDto);
+            await _publishEndpoint.Publish<FilmsDtoEvent>(eventMessage);
+
             return _mapper.Map<FilmsDTO>(films);
         }
 
